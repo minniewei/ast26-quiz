@@ -6,7 +6,7 @@ options:
   - text: "為減少 WAF，應該使用 ZNS (Zoned Namespaces)，將所有 Weights 資料獨立存放在特定的 Zone，確保它不會跟其他檔案混雜在一起。"
     correct: true
     explanation: |
-      透過 ZNS 將大體積的 Weights 與其他檔案在實體層級徹底隔離，讓模型失效時能直接「整塊抹除」而無需觸發 GC，從而將 WAF降至最低。
+      透過 ZNS 將大體積的 Weights 與其他檔案在實體層級徹底隔離，讓模型失效時能直接「整塊抹除」而無需觸發 GC，從而將 WAF 降至最低。
   - text: "在頻繁 model 切換的高壓寫入環境下，使用 Greedy Policy 永遠優於 Cost-Benefit Policy，因為它能以最快速度釋放被模型佔用的區塊。"
     explanation: |
       Cost-Benefit 能透過識別 Cold Data 來避免無謂搬移，在高壓且具備局部性的 AI 應用中，長期 WAF 表現通常優於純 Greedy。
