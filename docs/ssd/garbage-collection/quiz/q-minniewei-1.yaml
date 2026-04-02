@@ -1,0 +1,19 @@
+author: minniewei
+date: 2026-04-02
+question: |
+  TRIM 指令是 OS 發送給 SSD 的一種特殊命令，用於告知 SSD 哪些資料區塊已經不再使用，可以被安全地擦除或覆寫。
+  假設一位工程師在維護一台老舊伺服器，該伺服器使用的 OS 並不支援 TRIM 。雖然硬碟是一顆高品質的企業級 SSD，且工程師刻意只規劃了 50% 的磁碟分割區使用空間，希望藉此留出大量閒置空間來優化 GC 效率。請問在長期運作後，下列哪種描述最符合該 SSD 的真實狀態？
+options:
+  - text: "缺乏 TRIM 會導致 SSD controller 無法得知哪些 block 已經被 host 刪除，因此在 GC 時可能會搬移大量已刪除但未被標記為 invalid 的資料，造成 efficiency 下降和 write amplification 上升。"
+    correct: true
+    explanation: |
+      TRIM 雖然能告知 SSD 哪些資料已無效以加速 GC，但它通常是**非同步**的，SSD 控制器並不會在每次寫入新資料前都停下來等待 TRIM 的確認。
+  - text: "缺乏 TRIM 只會影響讀取速度，並不會影響 GC 的寫入效率或 write amplification"
+    explanation: |
+      沒有 TRIM 的情況下，SSD controller 無法得知哪些 block 已經被 host 刪除，因此無法將這些 block 視為 free block。GC 可能會誤判這些 block 中的資料仍然 valid，造成 efficiency 下降和 write amplification 上升。
+  - text: "即使沒有 TRIM，SSD controller 仍然會定期執行內部掃描來識別哪些 block 已經不再使用，從而維持 GC 的 efficiency 和較低的 write amplification"
+    explanation: |
+      SSD controller 通常不會主動掃描整個 NAND flash 來識別哪些 block 已經 invalid，因為這樣的掃描會帶來額外的性能開銷。"
+  - text: "只要工程師在分割磁碟時留白（Unallocated Space)，SSD firmware 就能自動將這部分空間永久轉化為額外的 OP， 不受是否有 TRIM 影響"
+    explanation: |
+      SSD controller 只能將已經被 host 刪除並且被標記為 invalid 的 block 視為 free block，才能在 GC 時直接回收而不需搬移資料。即使工程師留白了大量的使用者可見空間，如果沒有 TRIM，SSD controller 仍然會將這些空間視為 valid data，無法發揮降低 write amplification 的效果。
