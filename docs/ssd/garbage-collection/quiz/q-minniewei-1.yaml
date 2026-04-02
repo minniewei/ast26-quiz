@@ -3,7 +3,7 @@ date: 2026-04-02
 question: |
   在 SSD frimware 設計中，關於區分 Hot Page (更新頻繁) 與 Cold Page (更新較少) 的機制及其對 GC 的影響，下列敘述何者最為正確？
 options:
-  - text: "利用 Multi-level Queues 或 Counter 監控 LBA 的更新頻率，將 Hot Page 集中存放
+  - text: "SSD 利用 Multi-level Queues 或 Counter 監控 LBA 的更新頻率，將 Hot Page 集中存放
     correct: true
     explanation: |
       SSD controller 通常會透過 Multi-level Queues 或 Counter 來監控每個 LBA 的更新頻率，將 Hot Page 集中存放在特定的區塊中。這樣在 GC 時，Hot Blocks 可能很快累積 invalid pages，使 GC 在回收時需要搬移的 valid pages 減少，從而降低 write amplification。
