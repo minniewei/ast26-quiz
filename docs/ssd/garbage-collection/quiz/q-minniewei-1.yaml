@@ -4,6 +4,7 @@ question: |
   在現今 AI inference 應用中，系統常因應不同任務進行 Model Swapping，導致 GB 等級的模型 Weights 在 SSD 中頻繁寫入與覆寫。若此時 SSD 內部同時在處理細碎的 Log，關於其 GC 表現，下列敘述何者最為正確？
 options:
   - text: "為減少 WAF，應該使用 ZNS (Zoned Namespaces)，將所有 Weights 資料獨立存放在特定的 Zone，確保它不會跟其他檔案混雜在一起。"
+    correct: true
     explanation: |
       透過 ZNS 將大體積的 Weights 與其他檔案在實體層級徹底隔離，讓模型失效時能直接「整塊抹除」而無需觸發 GC，從而將 WAF降至最低。
   - text: "在頻繁 model 切換的高壓寫入環境下，使用 Greedy Policy 永遠優於 Cost-Benefit Policy，因為它能以最快速度釋放被模型佔用的區塊。"
