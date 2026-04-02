@@ -10,8 +10,8 @@ question: |
     - 每個 child pointer 佔 6 bytes
     - 每個 leaf node 可存 100 筆資料
 
-  註 1 : 每個 inner node 的 fan-out 是 $\lfloor {8192 \over (40 + 6)} \rfloor = 178$。
-  註 2 : $\lceil \log_{178}(10^7) \rceil = 4$。
+  註 : 每個 inner node 的 fan-out 是 $\lfloor {8192 \over (40 + 6)} \rfloor = 178$。
+
 options:
   - text: "BST 的搜尋次數為 30 次 I/O，而 B+Tree 的搜尋次數為 5 次 I/O，因此 B+Tree 較快，時間差異約為 250 ms。"
     correct: true
@@ -19,12 +19,12 @@ options:
       在 BST 中，每個 node 只能存一筆資料，因此需要 $10^9$ 個 node，樹高約為 $\log_2(10^9) \approx 30$，因此搜尋需要約 30 次 I/O。每次 I/O 需要 10 ms，因此總搜尋時間約為 $30 \times 10 \text{ ms} = 300 \text{ ms}$。
       在 B+ Tree 中，每個 leaf node 可存 100 筆資料，因此需要 $10^9 / 100 = 10^7$ 個 leaf node。每個 inner node 的 fan-out 為 178，樹高約為 $\lceil \log_{178}(10^7) \rceil = 4$，因此總搜尋時間為 $(4+1) \times 10 \text{ ms} = 50 \text{ ms}$。
       每次 I/O 需要 10 ms，因此總搜尋時間差異約為 $300 \text{ ms} - 50 \text{ ms} = 250 \text{ ms}$。
-  - text: "BST 的搜尋次數為 5 次 I/O，而 B+Tree 的搜尋次數為 30 次 I/O，因此 BST 較快，時間差異約為 250 ms。"
+  - text: "BST 的搜尋次數為 30 次 I/O，而 B+Tree 的搜尋次數為 4 次 I/O，因此 B+ Tree 較快，時間差異約為 260 ms。"
     explanation: |
-      BST 的搜尋次數應該是約 30 次 I/O，而不是 5 次 I/O。B+ Tree 的搜尋次數則是約 5 次 I/O，而不是 30 次 I/O。
-  - text: "BST 的搜尋次數為 7 次 I/O，而 B+Tree 的搜尋次數為 22 次 I/O，因此 BST 較快，時間差異約為 150 ms。"
+      B+ Tree 的搜尋次數為樹高 + 1（因為需要讀取 leaf node），因此應該是 4 + 1 = 5 次 I/O，而不是 4 次 I/O。
+  - text: "BST 的搜尋次數為 24 次 I/O，而 B+Tree 的搜尋次數為 5 次 I/O，因此 BST 較快，時間差異約為 180 ms。"
     explanation: |
-      BST 的搜尋次數應該是約 30 次 I/O，而不是 7 次 I/O。B+ Tree 的搜尋次數則是約 5 次 I/O，而不是 22 次 I/O。
-  - text: "BST 的搜尋次數為 22 次 I/O，而 B+Tree 的搜尋次數為 7 次 I/O，因此 B+Tree 較快，時間差異約為 150 ms。"
+      BST 的搜尋次數應該是 $\log_2(10^9) \approx 30$，而不是 $\log_2(10^7) \approx 24$
+  - text: "BST 的搜尋次數為 30 次 I/O，而 B+Tree 的搜尋次數為 25 次 I/O，因此 B+Tree 較快，時間差異約為 50 ms。"
     explanation: |
-      BST 的搜尋次數應該是約 30 次 I/O，而不是 22 次 I/O。B+ Tree 的搜尋次數則是約 5 次 I/O，而不是 7 次 I/O。
+      B+ Tree 的 fan-out 為 178 非 2，故樹高不該為 $\lceil \log_{2}(10^7) \rceil = 24$，而為 $\lceil \log_{178}(10^7) \rceil = 4$。
