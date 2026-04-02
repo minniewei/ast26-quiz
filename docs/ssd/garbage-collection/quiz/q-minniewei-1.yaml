@@ -1,0 +1,18 @@
+author: minniewei
+date: 2026-04-02
+question: |
+  在現今 AI inference 應用中，系統常因應不同任務進行 Model Swapping，導致 GB 等級的模型 Weights 在 SSD 中頻繁寫入與覆寫。若此時 SSD 內部同時在處理細碎的 Log，關於其 GC 表現，下列敘述何者最為正確？
+options:
+  - text: "若 Controller 未能區分資料特性，將大體積、相對穩定的 Model Weights與更新極快、生命週期短的 System Log 混放在同一個 Block，將導致 GC 時必須搬移大量資料，大幅增加 WAF。"
+    correct: true
+    explanation: |
+      「資料混放」導致 GC 必須為了回收短命資料的空間，而無謂地大量搬移長命資料，造成嚴重的 WAF。
+  - text: "在頻繁 model 切換的高壓寫入環境下，使用 Greedy Policy 永遠優於 Cost-Benefit Policy，因為它能以最快速度釋放被模型佔用的區塊。"
+    explanation: |
+      Cost-Benefit 能透過識別 Cold Data 來避免無謂搬移，在高壓且具備局部性的 AI 應用中，長期 WAF 表現通常優於純 Greedy。
+  - text: "模型權重屬於 Sequential Write，這類資料在 SSD 中永遠不會產生碎裂化，因此不論如何與其他資料混放，都不會觸發垃圾回收機制。"
+    explanation: |
+      誤以為初始寫入的連續性能抵銷資料混放的負面影響，實際上不同生命週期的資料共用 Block 必然導致無效空間分佈不均，進而頻繁觸發 GC 搬移。
+  - text: "由於模型權重主要是被讀取，只要不進行寫入，模型切換產生的舊資料會自動由 OS 回收，不佔用 SSD 實體空間空間，因此對 WAF 無影響"
+    explanation: |
+      誤以為 OS 的 logical recycle 能等同於 SSD 的 physical erase，實際上模型切換產生的「寫入」與「有效資料搬移」才是 WAF 的元兇。
