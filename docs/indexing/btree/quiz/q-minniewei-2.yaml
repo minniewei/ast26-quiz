@@ -12,12 +12,12 @@ options:
   - text: "方案乙較短，主導原因是 I/O 次數大幅下降。"
     correct: true
     explanation: |
-      在方案甲當中，樹高約為 $\lceil \log_{10}(10^6) \rceil = 6$，總搜尋時間約為 $6 \times 10 \text{ ms} + 6 \times \log_2(10) \text{ ms} \approx 60 \text{ ms} + 19.9 \text{ ms} = 79.9 \text{ ms}$。
-      在方案乙當中，樹高約為 $\lceil \log_{1000}(10^6) \rceil = 2$，總搜尋時間約為 $2 \times 10 \text{ ms} + 2 \times \log_2(1000) \text{ ms} \approx 20 \text{ ms} + 19.9 \text{ ms} = 39.9 \text{ ms}$。
-      雖然方案乙的每層搜尋時間略高，但 I/O 次數從 6 次降到 2 次，對總搜尋時間的影響更大，因此方案乙較短，主導原因是 I/O 次數大幅下降。
+      在方案甲當中，樹高約為 $\lceil \log_{10}(10^6) \rceil = 6$，總搜尋時間約為 $(6_{\text{inner}} +1_{\text{leaf}}) \times 10 \text{ ms} + (6_{\text{inner}} +1_{\text{leaf}}) \times \log_2(10) \text{ ms} \approx 70 \text{ ms} + 23.24 \text{ ms} = 93.24 \text{ ms}$。
+      在方案乙當中，樹高約為 $\lceil \log_{1000}(10^6) \rceil = 2$，總搜尋時間約為 $(2_{\text{inner}} +1_{\text{leaf}}) \times 10 \text{ ms} + (2_{\text{inner}} +1_{\text{leaf}}) \times \log_2(1000) \text{ ms} \approx 30 \text{ ms} + 29.89 \text{ ms} = 59.89 \text{ ms}$。
+      雖然方案乙的每層搜尋時間略高，但 I/O 次數從 7 次降到 3 次，對總搜尋時間的影響更大，因此方案乙較短，主導原因是 I/O 次數大幅下降。
   - text: "方案甲較短，主因是二元搜尋所需要的時間較短"
     explanation: |
-      雖方案甲較乙在二元搜尋上節省了一些時間，但 I/O 次數從 2 次升到 6 次，對總搜尋時間的影響更大，因此方案乙較短。
+      雖方案甲較乙在二元搜尋上節省了一些時間，但 I/O 次數從 3 次升到 7 次，對總搜尋時間的影響更大，因此方案乙較短。
   - text: "兩者所需要的時間相近，因為 I/O 次數與二元搜尋時間的變化剛好抵銷。"
     explanation: |
       I/O 所需要的時間會大過於二元搜尋的時間，因此 I/O 次數的變化對總搜尋時間的影響更大，兩者所需要的時間不會相近。
