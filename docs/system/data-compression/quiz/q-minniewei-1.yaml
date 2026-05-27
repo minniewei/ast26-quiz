@@ -18,4 +18,4 @@ options:
 
   - text: "Fixed-output 在進行隨機存取讀取 1 byte 時，必須將整個壓縮過的 chunk 完全解壓縮，無法限制每次解壓量的上限。"
     explanation: |
-      非 Fixed-output，而是 Fixed-input 的特性。
+      Fixed-output 的特性是每個 output block 大小固定，因此在隨機存取時，必須解壓整個 block 才能取得所需的資料。
